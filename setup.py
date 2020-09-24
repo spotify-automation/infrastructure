@@ -15,6 +15,11 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/yahoo-fantasy-football/infrastructure',
     packages=find_packages('src/%s' % package_name),
+    entry_points={
+        'console_scripts': [
+            'distribute = src.distribute_python_package:distribute_python_package'
+        ]
+    },
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
