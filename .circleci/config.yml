@@ -43,7 +43,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/workspace
-      - setup_remote_docker
       - run:
           <<: *update_apt
       - run:
