@@ -73,7 +73,7 @@ class MainStack(Stack):
 
         CfnOutput(
             self,
-            'PyPIRepositoryBucket',
+            'PyPIRepositoryBucketName',
             value=pypi_repository_bucket.bucket_name,
             export_name='yahoo-fantasy-football-infrastructure-pypi-repository-bucket'
         )
