@@ -76,7 +76,8 @@ jobs:
                 --message "Bump version: {current_version} → {new_version} [skip ci]" \
                 patch setup.py
               echo "Pushing"
-              yes | git push
+              mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+              git push
             }
 
             {
