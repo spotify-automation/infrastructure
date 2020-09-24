@@ -27,6 +27,7 @@ pipenv_install: &pipenv_install
   command: |
     pipenv --three
     pipenv install -d
+
 jobs:
   checkout:
     <<: *shared_config
@@ -37,6 +38,45 @@ jobs:
       - persist_to_workspace:
           root: ~/workspace
           paths: .
+  deploy_python_package:
+    <<: *shared_config
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+      - setup_remote_docker
+      - run:
+          <<: *update_apt
+      - run:
+          <<: *install_pipenv
+      - run:
+          <<: *pipenv_install
+      - run:
+          name: Distribute
+          command: |
+            distribute()
+            {
+              AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+              AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+              AWS_DEFAULT_REGION="us-east-1" \
+              pipenv run s3pypi --bucket "pypi-repository-bucket" --verbose
+            }
+
+            pipenv run pipenv-setup sync
+            {
+              distribute
+            } || {
+              git reset --hard HEAD
+              git config --global user.email "bumpversion@circleci.com"
+              git config --global user.name "bumpversion"
+              pipenv run bumpversion \
+                --current-version "$(pipenv run python setup.py --version)" \
+                --verbose --commit --tag \
+                --message "Bump version: {current_version} → {new_version} [skip ci]" \
+                patch setup.py
+              git push
+              pipenv run pipenv-setup sync
+              distribute
+            }
   deploy_stack:
     <<: *shared_config
     steps:
@@ -67,6 +107,9 @@ workflows:
             branches:
               only:
                 - master
+      - deploy_python_package:
+          requires:
+            - checkout
       - deploy_stack:
           requires:
             - checkout
