@@ -35,6 +35,9 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/workspace
+      - add_ssh_keys:
+          fingerprints:
+            - "c2:f2:41:34:77:ac:31:ff:2c:3a:2a:1e:96:a9:ac:85"
       - persist_to_workspace:
           root: ~/workspace
           paths: .
@@ -43,9 +46,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/workspace
-      - add_ssh_keys:
-          fingerprints:
-            - "c2:f2:41:34:77:ac:31:ff:2c:3a:2a:1e:96:a9:ac:85"
       - run:
           <<: *update_apt
       - run:
