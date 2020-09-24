@@ -51,22 +51,21 @@ jobs:
           <<: *pipenv_install
       - add_ssh_keys:
           fingerprints:
-            - "41:c3:09:77:7d:42:e9:50:9c:39:e5:65:17:5c:f1:d7"
+            - "c2:f2:41:34:77:ac:31:ff:2c:3a:2a:1e:96:a9:ac:85"
       - run:
           name: Distribute
           command: |
             distribute()
             {
+              pipenv run pipenv-setup sync
               AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
               AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
               AWS_DEFAULT_REGION="us-east-1" \
               pipenv run s3pypi --bucket "pypi-repository-bucket" --verbose
             }
 
-            pipenv run pipenv-setup sync
+            bump_version_number_and_push()
             {
-              distribute
-            } || {
               git reset --hard HEAD
               git config --global user.email "bumpversion@circleci.com"
               git config --global user.name "bumpversion"
@@ -76,7 +75,12 @@ jobs:
                 --message "Bump version: {current_version} → {new_version} [skip ci]" \
                 patch setup.py
               git push
-              pipenv run pipenv-setup sync
+            }
+
+            {
+              distribute
+            } || {
+              bump_version_number_and_push
               distribute
             }
   deploy_stack:
