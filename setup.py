@@ -17,7 +17,7 @@ setup(
     packages=find_packages('src/%s' % package_name),
     entry_points={
         'console_scripts': [
-            'distribute = src.distribute_python_package:distribute_python_package'
+            'distribute = distribute_python_package:distribute_python_package'
         ]
     },
     classifiers=[

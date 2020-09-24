@@ -3,6 +3,11 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
+[[source]]
+name = "private"
+url = "http://pypi-repository-bucket.s3-website-us-east-1.amazonaws.com"
+verify_ssl = false
+
 [dev-packages]
 aws-cdk-core = "*"
 aws-cdk-aws-s3 = "*"
@@ -14,6 +19,7 @@ bumpversion = "*"
 [packages]
 python-dotenv = "*"
 boto3 = "*"
+infrastructure = "*"
 
 [requires]
 python_version = "3.7"
