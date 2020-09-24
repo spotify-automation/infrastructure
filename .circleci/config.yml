@@ -74,7 +74,7 @@ jobs:
                 --verbose --commit --tag \
                 --message "Bump version: {current_version} → {new_version} [skip ci]" \
                 patch setup.py
-              git push
+              yes | git push
             }
 
             {
