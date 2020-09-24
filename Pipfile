@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+aws-cdk-core = "*"
+aws-cdk-aws-s3 = "*"
+aws-cdk-aws-iam = "*"
+
+[packages]
+python-dotenv = "*"
+boto3 = "*"
+
+[requires]
+python_version = "3.7"
