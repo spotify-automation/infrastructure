@@ -1,7 +1,5 @@
 from aws_cdk.aws_iam import Role, PolicyDocument, PolicyStatement, Effect, ServicePrincipal
-from aws_cdk.core import Stack, Construct, App, Duration
-import os
-import boto3
+from aws_cdk.core import Stack, Construct, App, CfnOutput
 
 
 class MainStack(Stack):
@@ -53,8 +51,15 @@ class MainStack(Stack):
             }
         )
 
+        CfnOutput(
+            self,
+            'lambda-role-arn',
+            value=lambda_role.role_arn,
+            export_name='yahoo-fantasy-football-infrastructure-lambda-role-arn'
+        )
+
 
 if __name__ == '__main__':
     app = App()
-    MainStack(app, 'yahoo-fantasy-football-scrape-pipeline')
+    MainStack(app, 'yahoo-fantasy-football-infrastructure')
     app.synth()
