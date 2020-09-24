@@ -73,6 +73,13 @@ class MainStack(Stack):
 
         CfnOutput(
             self,
+            'PyPIRepositoryBucket',
+            value=pypi_repository_bucket.bucket_name,
+            export_name='yahoo-fantasy-football-infrastructure-pypi-repository-bucket'
+        )
+
+        CfnOutput(
+            self,
             'PyPIRepositoryDomain',
             value=pypi_repository_bucket.bucket_domain_name,
             export_name='yahoo-fantasy-football-infrastructure-pypi-repository-domain'
