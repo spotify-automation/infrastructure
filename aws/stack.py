@@ -53,7 +53,7 @@ class MainStack(Stack):
 
         CfnOutput(
             self,
-            'lambda-role-arn',
+            'LambdaRoleArn',
             value=lambda_role.role_arn,
             export_name='yahoo-fantasy-football-infrastructure-lambda-role-arn'
         )
