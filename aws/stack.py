@@ -1,5 +1,5 @@
 from aws_cdk.aws_iam import Role, PolicyDocument, PolicyStatement, Effect, ServicePrincipal
-from aws_cdk.aws_s3 import Bucket, CorsRule, HttpMethods
+from aws_cdk.aws_s3 import Bucket, CorsRule, HttpMethods, BucketAccessControl
 from aws_cdk.core import Stack, Construct, App, CfnOutput, RemovalPolicy
 
 
@@ -64,6 +64,7 @@ class MainStack(Stack):
             'PyPIRepositoryBucket',
             bucket_name='pypi-repository-bucket',
             public_read_access=True,
+            access_control=BucketAccessControl.PUBLIC_READ,
             website_index_document='index.html',
             removal_policy=RemovalPolicy.DESTROY,
             cors=[
