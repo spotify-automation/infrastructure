@@ -7,7 +7,7 @@ package_name = 'infrastructure'
 
 setup(
     name=package_name,
-    version='0.0.5',
+    version='0.0.6',
     author='Aaron Mamparo',
     author_email='aaronmamparo@gmail.com',
     description='Shared infrastructure helpers for the Yahoo Fantasy Football project',
