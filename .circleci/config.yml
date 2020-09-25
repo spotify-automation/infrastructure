@@ -55,7 +55,7 @@ jobs:
             mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
             AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
             AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-            publish pypi-repository-bucket
+            pipenv run publish pypi-repository-bucket
   deploy_stack:
     <<: *shared_config
     steps:
