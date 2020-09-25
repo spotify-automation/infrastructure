@@ -15,7 +15,7 @@ aws-cdk-aws-iam = "*"
 s3pypi = "*"
 pipenv-setup = "*"
 bumpversion = "*"
-s3-package-publisher = "==0.0.18"
+s3-package-publisher = "==0.0.19"
 
 [packages]
 python-dotenv = "*"
