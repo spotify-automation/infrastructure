@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f83012d1263818c27d7721276de1fb3bf6fb526f009aaf5512c3b736f7a4e9e4"
+            "sha256": "235e433b7b7f3f2c76197083da8a7f6b38941d066176ee7afa987f31af554278"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -502,11 +502,11 @@
         },
         "s3-package-publisher": {
             "hashes": [
-                "sha256:9d8d79ebfdb677a0a89be19f692396d110bed4c1aa143343d735e8b0d77566c4",
-                "sha256:fb0dc9377a7446b90ea01b51af396bf91ccac0dd61b050f719883e1d45b3a73d"
+                "sha256:05602e0f27feac33d9dbb8ee1d2133eddfa99b8c8fe48229f7632584260161d3",
+                "sha256:251d8b4c8d27935b461692ae27d1c27978b18e1d24989aa8eae60e61ebdaca53"
             ],
             "index": "pypi",
-            "version": "==0.0.17"
+            "version": "==0.0.18"
         },
         "s3pypi": {
             "hashes": [
