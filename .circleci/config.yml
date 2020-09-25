@@ -49,43 +49,11 @@ jobs:
           <<: *install_pipenv
       - run:
           <<: *pipenv_install
-      - add_ssh_keys:
-          fingerprints:
-            - "c2:f2:41:34:77:ac:31:ff:2c:3a:2a:1e:96:a9:ac:85"
       - run:
           name: Distribute
           command: |
-            distribute()
-            {
-              pipenv run pipenv-setup sync
-              AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
-              AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-              AWS_DEFAULT_REGION="us-east-1" \
-              pipenv run s3pypi --bucket "pypi-repository-bucket" --verbose
-            }
-
-            bump_version_number_and_push()
-            {
-              git reset --hard HEAD
-              git config --global user.email "bumpversion@circleci.com"
-              git config --global user.name "bumpversion"
-              echo "Bumping version"
-              pipenv run bumpversion \
-                --current-version "$(pipenv run python setup.py --version)" \
-                --verbose --commit --tag \
-                --message "Bump version: {current_version} → {new_version} [skip ci]" \
-                patch setup.py
-              echo "Pushing"
-              mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-              git push
-            }
-
-            {
-              distribute
-            } || {
-              bump_version_number_and_push
-              distribute
-            }
+            mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+            publish
   deploy_stack:
     <<: *shared_config
     steps:

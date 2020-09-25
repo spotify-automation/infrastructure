@@ -15,10 +15,12 @@ aws-cdk-aws-iam = "*"
 s3pypi = "*"
 pipenv-setup = "*"
 bumpversion = "*"
+s3-package-publisher = "==0.0.17"
 
 [packages]
 python-dotenv = "*"
 boto3 = "*"
+infrastructure = "*"
 
 [requires]
 python_version = "3.7"
