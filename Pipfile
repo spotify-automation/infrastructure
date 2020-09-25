@@ -20,7 +20,6 @@ s3-package-publisher = "==0.0.19"
 [packages]
 python-dotenv = "*"
 boto3 = "*"
-infrastructure = "*"
 
 [requires]
 python_version = "3.7"
