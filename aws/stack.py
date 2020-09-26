@@ -86,6 +86,19 @@ class MainStack(Stack):
             export_name='yahoo-fantasy-football-infrastructure-pypi-repository-domain'
         )
 
+        bucket = Bucket(
+            self,
+            'DataLakeBucket',
+            removal_policy=RemovalPolicy.DESTROY
+        )
+
+        CfnOutput(
+            self,
+            'DataLakeBucket',
+            value=bucket.bucket_name,
+            export_name='yahoo-fantasy-football-infrastructure-data-lake-bucket'
+        )
+
 
 if __name__ == '__main__':
     app = App()
