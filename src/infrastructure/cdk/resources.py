@@ -14,7 +14,7 @@ def __get_singleton_lambda_role(scope: Construct) -> Role:
     if not __singleton_lambda_role:
         __singleton_lambda_role = Role.from_role_arn(
             scope,
-            'lambda-role-arn',
+            'lambda-role',
             get_stack_output('yahoo-fantasy-football-infrastructure', 'LambdaRoleArn')
         )
     return __singleton_lambda_role

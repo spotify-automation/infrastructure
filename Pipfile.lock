@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "61df9464dd2adb8efc82cf7e09bc236a3698c38eb86cf40df38b35858fb35c32"
+            "sha256": "77970fb2a72d316e3b38708c593c5407c34a5fe43f25cf75ede1a90bbed587b2"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -28,6 +28,14 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==20.2.0"
+        },
+        "aws-cdk-aws-iam": {
+            "hashes": [
+                "sha256:91cf564da63423a023a90ad0a04f3326f409773e8d9c201d13656924acace963",
+                "sha256:ad5a3b4efa77b11d48eb7f1aeda9ed2cb3155ccaf0e409730c19b11f7f2c7b6c"
+            ],
+            "index": "pypi",
+            "version": "==1.64.1"
         },
         "aws-cdk-aws-lambda": {
             "hashes": [
@@ -106,6 +114,7 @@
                 "sha256:91cf564da63423a023a90ad0a04f3326f409773e8d9c201d13656924acace963",
                 "sha256:ad5a3b4efa77b11d48eb7f1aeda9ed2cb3155ccaf0e409730c19b11f7f2c7b6c"
             ],
+            "index": "pypi",
             "markers": "python_version >= '3.6'",
             "version": "==1.64.1"
         },
@@ -306,14 +315,6 @@
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==20.2.0"
         },
-        "aws-cdk-aws-iam": {
-            "hashes": [
-                "sha256:91cf564da63423a023a90ad0a04f3326f409773e8d9c201d13656924acace963",
-                "sha256:ad5a3b4efa77b11d48eb7f1aeda9ed2cb3155ccaf0e409730c19b11f7f2c7b6c"
-            ],
-            "index": "pypi",
-            "version": "==1.64.1"
-        },
         "aws-cdk-aws-s3": {
             "hashes": [
                 "sha256:89307b10e8b44fcdc384c3a73669605722598b449063ef7e683af2bd2c8ae125",
@@ -343,6 +344,7 @@
                 "sha256:91cf564da63423a023a90ad0a04f3326f409773e8d9c201d13656924acace963",
                 "sha256:ad5a3b4efa77b11d48eb7f1aeda9ed2cb3155ccaf0e409730c19b11f7f2c7b6c"
             ],
+            "index": "pypi",
             "markers": "python_version >= '3.6'",
             "version": "==1.64.1"
         },
