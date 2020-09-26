@@ -10,7 +10,11 @@ def main():
     __run_command('rm -rf .build')
     __run_command('mkdir .build')
     __run_command('cp -r src .build')
-    __run_command('pipenv run pip freeze > .build/requirements.txt')
+    requirements = str(subprocess.check_output('pipenv run pip freeze'.split())).strip()
+    print('requirements:')
+    print(requirements)
+    with open('.build/requirements.txt', 'w+') as requirements_file:
+        requirements_file.write(requirements)
     __run_command('pip install -r .build/requirements.txt -t .build --compile')
 
 
