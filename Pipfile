@@ -12,10 +12,8 @@ verify_ssl = false
 aws-cdk-core = "*"
 aws-cdk-aws-s3 = "*"
 aws-cdk-aws-iam = "*"
-s3pypi = "*"
-pipenv-setup = "*"
-bumpversion = "*"
 s3-package-publisher = "==0.0.19"
+aws-cdk-aws-lambda = "*"
 
 [packages]
 python-dotenv = "*"
