@@ -16,6 +16,11 @@ setup(
         '': 'src'
     },
     packages=find_packages('src'),
+    entry_points={
+        'console_scripts': [
+            'build = src.build_lambda_deployment_package:main'
+        ]
+    },
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
