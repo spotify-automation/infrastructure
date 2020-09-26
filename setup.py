@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='infrastructure',
-    version='0.0.13',
+    version='0.0.14',
     author='Aaron Mamparo',
     author_email='aaronmamparo@gmail.com',
     description='Shared infrastructure helpers for the Yahoo Fantasy Football project',
