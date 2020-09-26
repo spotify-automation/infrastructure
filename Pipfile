@@ -11,13 +11,13 @@ verify_ssl = false
 [dev-packages]
 aws-cdk-core = "*"
 aws-cdk-aws-s3 = "*"
-aws-cdk-aws-iam = "*"
 s3-package-publisher = "==0.0.19"
 
 [packages]
 python-dotenv = "*"
 boto3 = "*"
 aws-cdk-aws-lambda = "*"
+aws-cdk-aws-iam = "*"
 
 [requires]
 python_version = "3.7"
