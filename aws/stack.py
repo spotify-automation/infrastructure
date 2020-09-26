@@ -94,9 +94,9 @@ class MainStack(Stack):
 
         CfnOutput(
             self,
-            'DataLakeBucket',
+            'DataLakeBucketName',
             value=bucket.bucket_name,
-            export_name='yahoo-fantasy-football-infrastructure-data-lake-bucket'
+            export_name='yahoo-fantasy-football-infrastructure-data-lake-bucket-name'
         )
 
 
