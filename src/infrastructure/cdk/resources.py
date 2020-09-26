@@ -14,7 +14,8 @@ def create_python_function(scope: Construct, _id: str, handler_path: str, enviro
         runtime=Runtime.PYTHON_3_7,
         code=Code.from_asset('.build', exclude=['boto3']),
         handler=handler_path,
-        role=Role.from_role_arn(get_stack_output('yahoo-fantasy-football-infrastructure', 'LambdaRoleArn')),
+        role=Role.from_role_arn('lambda-role-arn',
+                                get_stack_output('yahoo-fantasy-football-infrastructure', 'LambdaRoleArn')),
         environment=environment or {},
         timeout=Duration.minutes(15),
         memory_size=256
