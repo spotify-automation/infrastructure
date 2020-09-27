@@ -15,7 +15,8 @@ def __parse_pipfile() -> List[Tuple[str, List[Tuple[str, str]]]]:
             if not any(x in line for x in ['[', '=']):
                 continue
             if line.startswith('['):
-                sections.append(current_section)
+                if current_section:
+                    sections.append(current_section)
                 current_section = (line.replace('[', '').replace(']', ''), [])
             else:
                 tokens = [x.strip() for x in line.split('=')]
