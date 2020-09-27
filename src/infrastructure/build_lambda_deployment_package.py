@@ -1,27 +1,48 @@
 import subprocess
 import shlex
-import sys
-from typing import List
+from typing import List, Tuple, Optional
 
 
 def __run_command(argstr: str) -> int:
     return subprocess.run(shlex.split(argstr.strip(), posix=False)).returncode
 
 
+def __parse_pipfile() -> List[Tuple[str, List[Tuple[str, str]]]]:
+    sections: List[Tuple[str, List[Tuple[str, str]]]] = []
+    with open('Pipfile') as pipfile:
+        current_section: Optional[Tuple[str, List[Tuple[str, str]]]] = None
+        for line in [x.strip() for x in pipfile.read().splitlines()]:
+            if not any(x in line for x in ['[', '=']):
+                continue
+            if line.startswith('['):
+                sections.append(current_section)
+                current_section = (line.replace('[', '').replace(']', ''), [])
+            else:
+                tokens = [x.strip() for x in line.split('=')]
+                current_section[1].append((str(tokens[0]), str(tokens[1]).replace('"', '')))
+        if current_section and current_section[1]:
+            sections.append(current_section)
+    return sections
+
+
 def main():
-    extra_indexes: List[str] = sys.argv[1:]
-    print('Extra indexes:\n', '\n'.join(extra_indexes))
+    parsed_pipfile = __parse_pipfile()
     __run_command('rm -rf .build')
     __run_command('mkdir .build')
     __run_command('cp -r src .build')
-    requirements = str(subprocess.check_output('pipenv run pip freeze'.split()), 'utf-8')
-    print('requirements:')
-    print(requirements)
     with open('.build/requirements.txt', 'w+') as requirements_file:
-        requirements_file.writelines(requirements)
+        packages = next(x for x in parsed_pipfile if x[0] == 'packages')
+        requirements_file.writelines([
+            '%s%s' % (package, '' if version == '*' else version)
+            for package, version in packages[1]
+        ])
     install_command = 'pip install -r .build/requirements.txt -t .build --compile'
-    for extra_index in extra_indexes:
-        install_command += ' --extra-index-url %s' % extra_index
+    for source in [x for x in parsed_pipfile if x[0] == 'source']:
+        url = next(x[1] for x in source[1] if x[0] == 'url')
+        install_command += ' --extra-index-url %s --trusted-host %s' % (
+            url,
+            url.split('://')[-1].split('/')[0]
+        )
     __run_command(install_command)
 
 
