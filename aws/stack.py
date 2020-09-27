@@ -5,7 +5,7 @@ from aws_cdk.core import Stack, Construct, App, CfnOutput, RemovalPolicy
 class MainStack(Stack):
     def __init__(self, scope: Construct, _id: str, **kwargs) -> None:
         super().__init__(scope, _id, **kwargs)
-        pypi_repository_bucket = Bucket(
+        pip_repository_bucket = Bucket(
             self,
             'PipRepositoryBucket',
             bucket_name='daily-fantasy-sports-pip-repository',
@@ -21,15 +21,13 @@ class MainStack(Stack):
         CfnOutput(
             self,
             'PipRepositoryBucketName',
-            value=pypi_repository_bucket.bucket_name,
-            export_name='daily-fantasy-sports-pypi-repository-bucket'
+            value=pip_repository_bucket.bucket_name
         )
 
         CfnOutput(
             self,
             'PipRepositoryDomain',
-            value=pypi_repository_bucket.bucket_website_domain_name,
-            export_name='daily-fantasy-sports-pypi-repository-domain'
+            value=pip_repository_bucket.bucket_website_domain_name
         )
 
         data_lake_bucket = Bucket(
@@ -41,8 +39,7 @@ class MainStack(Stack):
         CfnOutput(
             self,
             'DataLakeBucketName',
-            value=data_lake_bucket.bucket_name,
-            export_name='daily-fantasy-sports-data-lake-bucket-name'
+            value=data_lake_bucket.bucket_name
         )
 
 
