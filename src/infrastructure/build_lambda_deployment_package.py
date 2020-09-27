@@ -32,11 +32,9 @@ def main():
     __run_command('mkdir .build')
     __run_command('cp -r src .build')
     with open('.build/requirements.txt', 'w+') as requirements_file:
-        packages = next(x for x in parsed_pipfile if x[0] == 'packages')
-        requirements_file.writelines([
-            '%s%s' % (package, '' if version == '*' else version)
-            for package, version in packages[1]
-        ])
+        packages = next(x for x in parsed_pipfile if x[0] == 'packages')[1]
+        for package, version in packages:
+            requirements_file.write('%s%s\n' % (package, '' if version == '*' else version))
     install_command = 'pip install -r .build/requirements.txt -t .build --compile'
     for source in [x for x in parsed_pipfile if x[0] == 'source']:
         url = next(x[1] for x in source[1] if x[0] == 'url')
