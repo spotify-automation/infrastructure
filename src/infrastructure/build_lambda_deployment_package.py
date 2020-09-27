@@ -1,5 +1,7 @@
 import subprocess
 import shlex
+import sys
+from typing import List
 
 
 def __run_command(argstr: str) -> int:
@@ -7,6 +9,8 @@ def __run_command(argstr: str) -> int:
 
 
 def main():
+    extra_indexes: List[str] = sys.argv[1:]
+    print('Extra indexes:\n', '\n'.join(extra_indexes))
     __run_command('rm -rf .build')
     __run_command('mkdir .build')
     __run_command('cp -r src .build')
@@ -15,7 +19,10 @@ def main():
     print(requirements)
     with open('.build/requirements.txt', 'w+') as requirements_file:
         requirements_file.writelines(requirements)
-    __run_command('pip install -r .build/requirements.txt -t .build --compile')
+    install_command = 'pip install -r .build/requirements.txt -t .build --compile'
+    for extra_index in extra_indexes:
+        install_command += ' --extra-index-url %s' % extra_index
+    __run_command(install_command)
 
 
 if __name__ == '__main__':
