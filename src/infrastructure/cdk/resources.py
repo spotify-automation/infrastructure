@@ -1,10 +1,8 @@
 from typing import Dict, Optional
 
-from aws_cdk.aws_iam import Role
+from aws_cdk.aws_iam import Role, ServicePrincipal, PolicyDocument, PolicyStatement, Effect
 from aws_cdk.aws_lambda import Function, Runtime, Code
 from aws_cdk.core import Construct, Duration
-
-from .helpers import get_stack_output
 
 __singleton_lambda_role: Optional[Role] = None
 
@@ -12,10 +10,50 @@ __singleton_lambda_role: Optional[Role] = None
 def __get_singleton_lambda_role(scope: Construct) -> Role:
     global __singleton_lambda_role
     if not __singleton_lambda_role:
-        __singleton_lambda_role = Role.from_role_arn(
+        __singleton_lambda_role = Role(
             scope,
-            'lambda-role',
-            get_stack_output('yahoo-fantasy-football-infrastructure', 'LambdaRoleArn')
+            'LambdaRole',
+            assumed_by=ServicePrincipal('lambda.amazonaws.com'),
+            inline_policies={
+                's3': PolicyDocument(
+                    statements=[
+                        PolicyStatement(
+                            effect=Effect.ALLOW,
+                            actions=[
+                                's3:ListBucket',
+                                's3:PutObject',
+                                's3:GetObject',
+                                's3:ListObjects'
+                            ],
+                            resources=[
+                                'arn:aws:s3:::*'
+                            ]
+                        )
+                    ]
+                ),
+                'lambda': PolicyDocument(
+                    statements=[
+                        PolicyStatement(
+                            effect=Effect.ALLOW,
+                            actions=['lambda:InvokeFunction'],
+                            resources=['arn:aws:lambda:*:*:function:*']
+                        )
+                    ]
+                ),
+                'logs': PolicyDocument(
+                    statements=[
+                        PolicyStatement(
+                            effect=Effect.ALLOW,
+                            actions=[
+                                'logs:CreateLogGroup',
+                                'logs:CreateLogStream',
+                                'logs:PutLogEvents'
+                            ],
+                            resources=['*']
+                        )
+                    ]
+                )
+            }
         )
     return __singleton_lambda_role
 

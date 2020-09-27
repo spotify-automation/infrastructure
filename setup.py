@@ -8,10 +8,10 @@ setup(
     version='0.0.34',
     author='Aaron Mamparo',
     author_email='aaronmamparo@gmail.com',
-    description='Shared infrastructure helpers for the Yahoo Fantasy Football project',
+    description='Shared infrastructure helpers for the Daily Fantasy Sports project',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/yahoo-fantasy-football/infrastructure',
+    url='https://github.com/daily-fantasy-sports/infrastructure',
     package_dir={
         '': 'src'
     },
