@@ -20,6 +20,7 @@ def __parse_pipfile() -> List[Tuple[str, List[Tuple[str, str]]]]:
                 current_section = (line.replace('[', '').replace(']', ''), [])
             else:
                 tokens = [x.strip() for x in line.split('=')]
+                tokens = [tokens[0], '='.join(tokens[1:])]
                 current_section[1].append((str(tokens[0]), str(tokens[1]).replace('"', '')))
         if current_section and current_section[1]:
             sections.append(current_section)
