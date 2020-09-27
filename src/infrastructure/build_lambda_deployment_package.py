@@ -34,7 +34,7 @@ def main():
     with open('.build/requirements.txt', 'w+') as requirements_file:
         packages = next(x for x in parsed_pipfile if x[0] == 'packages')[1]
         for package, version in packages:
-            requirements_file.write('%s%s\n' % (package, '' if version == '*' else version))
+            requirements_file.write('%s%s\n' % (package, ('' if version == '*' else version)))
     install_command = 'pip install -r .build/requirements.txt -t .build --compile'
     for source in [x for x in parsed_pipfile if x[0] == 'source']:
         url = next(x[1] for x in source[1] if x[0] == 'url')
