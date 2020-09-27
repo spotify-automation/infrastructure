@@ -14,7 +14,7 @@ def main():
     print('requirements:')
     print(requirements)
     with open('.build/requirements.txt', 'w+') as requirements_file:
-        requirements_file.writelines(requirements.splitlines())
+        requirements_file.writelines(requirements)
     __run_command('pip install -r .build/requirements.txt -t .build --compile')
 
 
