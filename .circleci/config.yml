@@ -38,24 +38,6 @@ jobs:
       - persist_to_workspace:
           root: ~/workspace
           paths: .
-  deploy_python_package:
-    <<: *shared_config
-    steps:
-      - attach_workspace:
-          at: ~/workspace
-      - run:
-          <<: *update_apt
-      - run:
-          <<: *install_pipenv
-      - run:
-          <<: *pipenv_install
-      - run:
-          name: Distribute
-          command: |
-            mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-            AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
-            AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-            pipenv run publish daily-fantasy-sports-pip-repository
   deploy_stack:
     <<: *shared_config
     steps:
@@ -75,7 +57,8 @@ jobs:
           command: |
             AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
             AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
-            AWS_DEFAULT_REGION="us-east-1" \
+            AWS_ACCOUNT_ID="${AWS_ACCOUNT_ID}" \
+            AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION}" \
             cdk deploy --require-approval never --verbose
 workflows:
   version: 2
@@ -86,9 +69,8 @@ workflows:
             branches:
               only:
                 - master
-      - deploy_python_package:
-          requires:
-            - checkout
       - deploy_stack:
+          context:
+            - AWS
           requires:
             - checkout

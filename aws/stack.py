@@ -1,17 +1,22 @@
+from os import environ
+
 from aws_cdk.aws_s3 import Bucket, CorsRule, HttpMethods, BucketAccessControl
-from aws_cdk.core import Stack, Construct, App, CfnOutput, RemovalPolicy
+from aws_cdk.core import Stack, Construct, App, CfnOutput, RemovalPolicy, Environment
 
 
 class MainStack(Stack):
     def __init__(self, scope: Construct, _id: str, **kwargs) -> None:
         super().__init__(scope, _id, **kwargs)
-        pip_repository_bucket = Bucket(
+        domain_name = 'aaronmamparo.com'
+        pip_hostname = 'spotify-automation.pip.%s' % domain_name
+        Bucket(
             self,
             'PipRepositoryBucket',
-            bucket_name='daily-fantasy-sports-pip-repository',
+            bucket_name=pip_hostname,
             public_read_access=True,
             access_control=BucketAccessControl.PUBLIC_READ,
             website_index_document='index.html',
+            website_error_document='index.html',
             removal_policy=RemovalPolicy.DESTROY,
             cors=[
                 CorsRule(allowed_methods=[HttpMethods.GET], allowed_origins=['*']),
@@ -20,14 +25,8 @@ class MainStack(Stack):
 
         CfnOutput(
             self,
-            'PipRepositoryBucketName',
-            value=pip_repository_bucket.bucket_name
-        )
-
-        CfnOutput(
-            self,
-            'PipRepositoryDomain',
-            value=pip_repository_bucket.bucket_website_domain_name
+            'PipRepositoryHostname',
+            value=pip_hostname
         )
 
         data_lake_bucket = Bucket(
@@ -45,5 +44,8 @@ class MainStack(Stack):
 
 if __name__ == '__main__':
     app = App()
-    MainStack(app, 'daily-fantasy-sports-infrastructure')
+    MainStack(app, 'spotify-automation-infrastructure', env=Environment(
+        account=environ.get('AWS_ACCOUNT_ID'),
+        region=environ.get('AWS_DEFAULT_REGION')
+    ))
     app.synth()
