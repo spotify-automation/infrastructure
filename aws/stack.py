@@ -4,6 +4,7 @@ from typing import cast
 from aws_cdk.aws_route53 import RecordTarget, IAliasRecordTarget, HostedZone, ARecord
 from aws_cdk.aws_route53_targets import BucketWebsiteTarget
 from aws_cdk.aws_s3 import Bucket, CorsRule, HttpMethods, BucketAccessControl
+from aws_cdk.aws_sns import Topic
 from aws_cdk.core import Stack, Construct, App, CfnOutput, RemovalPolicy, Environment, Duration
 
 
@@ -49,6 +50,19 @@ class MainStack(Stack):
             'DataLakeBucketName',
             value=data_lake_bucket.bucket_name
         )
+
+        topic = Topic(
+            self,
+            'Topic'
+        )
+
+        CfnOutput(
+            self,
+            'TopicArn',
+            value=topic.topic_arn
+        )
+
+
 
 
 if __name__ == '__main__':

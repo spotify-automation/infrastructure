@@ -8,6 +8,7 @@ aws-cdk-core = "*"
 aws-cdk-aws-s3 = "*"
 aws-cdk-aws-route53 = "*"
 aws-cdk-aws-route53-targets = "*"
+aws-cdk-aws-sns = "*"
 
 [requires]
 python_version = "3.7"
